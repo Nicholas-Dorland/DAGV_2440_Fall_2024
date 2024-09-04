@@ -1,0 +1,15 @@
+// Create Left side of ladder.
+polyCube -w 1 -h 20 -d 1 -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd -3 10 0;
+
+// Create Right side of ladder.
+polyCube -w 1 -h 20 -d 1 -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+move -r -os -wd 3 10 0;
+
+// Create a 5-rung ladder.
+for ($i = 0; $i < 5; $i++)
+{
+    polyCylinder -r 0.3 -h 5.5 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+    rotate -r -os -fo 0 0 -90;
+    move -r 0 ($i * 4 + 2) 0;
+}
