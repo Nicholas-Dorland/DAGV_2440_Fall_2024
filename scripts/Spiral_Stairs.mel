@@ -1,0 +1,33 @@
+//FDSA
+Number of stairs to be created
+Stair length
+Stair width
+Stair height
+Stair pivot point or offset
+Step height
+Step rotation
+
+// Accept a call and assign values.
+void GenerateStaircase(int $numStair, float $stairLen, float $stairWid, float $stairHei, float $stairOff, float $stepHei, float $stepRotat)
+{
+    for ($i = 0; $i < $numStair; $i++)
+    {
+        BuildStair($stairLen, $stairWid, $stairHei);
+        if ($i != 0)
+        {
+            SpinStair($numStair, $stairLen, $stairWid, $stairHei, $stairOff, $stepHei, $stepRotat);
+        }
+    }
+}
+
+// Build the stair block.
+void BuildStair(float $length, float $width, float $height)
+{
+
+}
+
+// Move the stair accordingly, with rotation.
+void SpinStair(int $num, float $length, float $width, float $height, float $offset, float $height, float $rotation)
+{
+
+}
