@@ -23,48 +23,19 @@ proc BuildStair(float $length, float $width, float $height)
     polyCube -w $width -h $height -d $length -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
 }
 
-// Move the stair accordingly, with rotation.
+// Move the stair accordingly, with rotation. *Written with help from Microsoft's CoPilot Engine*
 proc SpinStair(int $num, float $height, float $offset, float $sHeight, float $rotation)
 {
+    // Figure out where to move the step.
     float $angle = $num * $rotation;
-    float $x = -$offset * cos(deg_to_rad($rotation));
-    float $z = $offset * sin(deg_to_rad($rotation));
+    float $x = -$offset * cos(deg_to_rad($angle));
+    float $z = $offset * sin(deg_to_rad($angle));
     float $y = $num * ($height + $sHeight);
 
-    // Create the step
-    //polyCube -w 1 -h $stepHeight -d 0.5 -sx 1 -sy 1 -sz 1;
+    // Move the step.
     move $x $y $z;
-    rotate 0 $angle 0;
-}
-
-// Function to convert degrees to radians
-global proc float deg_to_rad(float $deg) {
-    return $deg * 3.141592653589793 / 180.0;
-}
-
-
-
-
-
-
-// Define the number of steps and the height of each step
-int $numSteps = 20;
-float $stepHeight = 0.5;
-float $radius = 2.0;
-float $angleStep = 360.0 / $numSteps;
-
-// Loop to create each step
-for ($i = 0; $i < $numSteps; $i++) {
-    // Calculate the position and rotation for each step
-    float $angle = $i * $angleStep;
-    float $x = -$radius * cos(deg_to_rad($angle));
-    float $z = $radius * sin(deg_to_rad($angle));
-    float $y = $i * $stepHeight;
-
-    // Create the step
-    polyCube -w 1 -h $stepHeight -d 0.5 -sx 1 -sy 1 -sz 1;
-    move $x $y $z;
-    rotate 0 $angle 0;
+    xform -r;
+    rotate 0 ($angle + 90) 0;
 }
 
 // Function to convert degrees to radians
