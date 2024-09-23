@@ -1,0 +1,78 @@
+//FDSA
+
+//Add
+proc Add(float $list[])
+{
+    float $start = $list[0];
+    for ($1 = 1; i < size($list); i++)
+    {
+        $start += $list[i];
+    }
+}
+
+//Subtract
+proc Subtract(float $list[])
+{
+    float $start = $list[0];
+    for ($1 = 1; i < size($list); i++)
+    {
+        $start -= $list[i];
+    }
+}
+
+//Divide
+proc Divide(float $list[])
+{
+    float $start = $list[0];
+    for ($1 = 1; i < size($list); i++)
+    {
+        $start /= $list[i];
+    }
+}
+
+//Multiply
+proc Multiply(float $list[])
+{
+    float $start = $list[0];
+    for ($1 = 1; i < size($list); i++)
+    {
+        $start *= $list[i];
+    }
+}
+
+//Power
+proc Power(float $list[])
+{
+    float $result = $list[0] ^ $list[1];
+}
+
+//Mean
+proc Mean(float $list[])
+{
+    float $start = Add($list);
+    $start /= size($list);
+}
+
+//Median
+proc Median(float $list[])
+{
+    //Create new Array, same size as input $list.
+    float $temp[size($list)];
+    //For each spot in new array, go through and find lowest number in input $list.
+    for ($i = 0; $i < size($temp); $i++)
+    {
+        //Temp value to modify and input.
+        float $spot = $list[$i];
+        for ($x = 0; $x < size($list); $x++)
+        {
+            //Store value if lower than current.
+            if ($list[$x] <= $spot)
+            {
+                $spot = $list[$x];
+            }
+        }
+        $temp[$i] = $spot;
+        //Put lowest number into current spot in new array.
+        //Turn that number into a blank in input $list.
+    }
+}

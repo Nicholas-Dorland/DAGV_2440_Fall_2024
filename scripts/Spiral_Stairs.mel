@@ -1,12 +1,3 @@
-//FDSA
-Number of stairs to be created
-Stair length
-Stair width
-Stair height
-Stair pivot point or offset
-Step height
-Step rotation
-
 // Accept a call and assign values.
 proc GenerateStaircase(int $numStair, float $stairLen, float $stairWid, float $stairHei, float $stairOff, float $stepHei, float $stepRotat)
 {
