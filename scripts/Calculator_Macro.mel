@@ -1,5 +1,3 @@
-//FDSA
-
 //Add
 proc Add(float $list[])
 {
@@ -56,23 +54,26 @@ proc Mean(float $list[])
 //Median
 proc Median(float $list[])
 {
-    //Create new Array, same size as input $list.
-    float $temp[size($list)];
-    //For each spot in new array, go through and find lowest number in input $list.
-    for ($i = 0; $i < size($temp); $i++)
-    {
-        //Temp value to modify and input.
-        float $spot = $list[$i];
-        for ($x = 0; $x < size($list); $x++)
-        {
-            //Store value if lower than current.
-            if ($list[$x] <= $spot)
-            {
-                $spot = $list[$x];
+    // Bubble Sort the Array, provided by CoPilot.
+    int $n = size($list);
+    for ($i = 0; $i < $n; $i++) {
+        for ($j = 0; $j < $n - $i - 1; $j++) {
+            if ($list[$j] > $list[$j + 1]) {
+                // Swap the numbers
+                float $temp = $list[$j];
+                $list[$j] = $list[$j + 1];
+                $list[$j + 1] = $temp;
             }
         }
-        $temp[$i] = $spot;
-        //Put lowest number into current spot in new array.
-        //Turn that number into a blank in input $list.
+    }
+
+    // Find median, whether the size of list is odd or even.
+    if ($n % 2)
+    {
+        float $result = $list[(n / 2) + 1];
+    }
+    else
+    {
+        float $result = ($list[n / 2] + $list[(n / 2) + 1]) / 2;
     }
 }
