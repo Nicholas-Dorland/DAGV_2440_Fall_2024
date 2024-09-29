@@ -1,47 +1,53 @@
 //Add
-proc Add(float $list[])
+proc float Add(float $list[])
 {
     float $start = $list[0];
-    for ($1 = 1; i < size($list); i++)
+    for ($i = 1; $i < size($list); $i++)
     {
-        $start += $list[i];
+        $start += $list[$i];
     }
+    print ("The sum is: " + $start + "\n");
+    return $start;
 }
 
 //Subtract
 proc Subtract(float $list[])
 {
     float $start = $list[0];
-    for ($1 = 1; i < size($list); i++)
+    for ($i = 1; $i < size($list); $i++)
     {
-        $start -= $list[i];
+        $start -= $list[$i];
     }
+    print ("The total is: " + $start + "\n");
 }
 
 //Divide
 proc Divide(float $list[])
 {
     float $start = $list[0];
-    for ($1 = 1; i < size($list); i++)
+    for ($i = 1; $i < size($list); $i++)
     {
-        $start /= $list[i];
+        $start /= $list[$i];
     }
+    print ("The total is: " + $start + "\n");
 }
 
 //Multiply
 proc Multiply(float $list[])
 {
     float $start = $list[0];
-    for ($1 = 1; i < size($list); i++)
+    for ($i = 1; $i < size($list); $i++)
     {
-        $start *= $list[i];
+        $start *= $list[$i];
     }
+    print ("The total is: " + $start + "\n");
 }
 
 //Power
 proc Power(float $list[])
 {
-    float $result = $list[0] ^ $list[1];
+    float $result = pow ($list[0], $list[1]);
+    print ("The total is: " + $result + "\n");
 }
 
 //Mean
@@ -49,31 +55,26 @@ proc Mean(float $list[])
 {
     float $start = Add($list);
     $start /= size($list);
+    print ("The mean is: " + $start + "\n");
 }
 
 //Median
 proc Median(float $list[])
-{
-    // Bubble Sort the Array, provided by CoPilot.
-    int $n = size($list);
-    for ($i = 0; $i < $n; $i++) {
-        for ($j = 0; $j < $n - $i - 1; $j++) {
-            if ($list[$j] > $list[$j + 1]) {
-                // Swap the numbers
-                float $temp = $list[$j];
-                $list[$j] = $list[$j + 1];
-                $list[$j + 1] = $temp;
-            }
-        }
-    }
+{    
+    float $sortedList[] = sort ($list);
+    float $result = 0;
 
     // Find median, whether the size of list is odd or even.
-    if ($n % 2)
+    int $m = size($list);
+    int $n = ($m / 2);  // Middle of the array.
+    if ($m % 2)
     {
-        float $result = $list[(n / 2) + 1];
+        $result = $sortedList[$n];
     }
     else
     {
-        float $result = ($list[n / 2] + $list[(n / 2) + 1]) / 2;
+        $result = ($sortedList[$n] + $sortedList[($n - 1)]) / 2;
     }
+
+    print ($result);
 }
