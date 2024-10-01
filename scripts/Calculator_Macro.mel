@@ -1,65 +1,73 @@
 //Add
-proc float Add(float $list[])
+proc float Add(float $list[], bool $isMean)
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
     {
         $start += $list[$i];
     }
-    print ("The sum is: " + $start + "\n");
+    if (!$isMean)
+    {
+        print ($start + "\n");
+    }
     return $start;
 }
 
 //Subtract
-proc Subtract(float $list[])
+proc float Subtract(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
     {
         $start -= $list[$i];
     }
-    print ("The total is: " + $start + "\n");
+    print ($start + "\n");
+    return $start;
 }
 
 //Divide
-proc Divide(float $list[])
+proc float Divide(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
     {
         $start /= $list[$i];
     }
-    print ("The total is: " + $start + "\n");
+    print ($start + "\n");
+    return $start;
 }
 
 //Multiply
-proc Multiply(float $list[])
+proc float Multiply(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
     {
         $start *= $list[$i];
     }
-    print ("The total is: " + $start + "\n");
+    print ($start + "\n");
+    return $start;
 }
 
 //Power
-proc Power(float $list[])
+proc float Power(float $list[])
 {
     float $result = pow ($list[0], $list[1]);
-    print ("The total is: " + $result + "\n");
+    print ($result + "\n");
+    return $result;
 }
 
 //Mean
-proc Mean(float $list[])
+proc float Mean(float $list[])
 {
     float $start = Add($list);
     $start /= size($list);
-    print ("The mean is: " + $start + "\n");
+    print ($start + "\n");
+    return $start;
 }
 
 //Median
-proc Median(float $list[])
+proc float Median(float $list[])
 {    
     float $sortedList[] = sort ($list);
     float $result = 0;
@@ -76,5 +84,53 @@ proc Median(float $list[])
         $result = ($sortedList[$n] + $sortedList[($n - 1)]) / 2;
     }
 
-    print ($result);
+    print ($result + "\n");
+    return $result;
+}
+
+proc Output(float $list, string $x)
+{
+    print ($list[0]);
+    for ($i = 1; $i < size($list); $i++)
+    {
+        print (" " + $x + " " + $list[$i]);
+    }
+    print (" = ");
+}
+
+proc Calculator(float $list, string $opp)
+{
+    switch ($opp)
+    {
+        case "add":
+            Output($list, "+");
+            print (Add($list));
+            break;
+        case "subtract":
+            Output($list, "-");
+            print (Subtract($list));
+            break;
+        case "divide":
+            Output($list, "/");
+            print (Divide($list));
+            break;
+        case "multiply":
+            Output($list, "*");
+            print (Multiply($list));
+            break;
+        case "power":
+            Output($list, "^");
+            print (Power($list));
+            break;
+        case "mean":
+            print ("The Mean of ");
+            Output($list, "+");
+            print (Mean($list));
+            break;
+        case "median":
+            print ("The Median of ");
+            Output($list, "+");
+            print (Median($list));
+            break;
+    }
 }
