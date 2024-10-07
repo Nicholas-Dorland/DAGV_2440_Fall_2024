@@ -1,14 +1,10 @@
 //Add
-proc float Add(float $list[], bool $isMean)
+proc float Add(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
     {
         $start += $list[$i];
-    }
-    if (!$isMean)
-    {
-        print ($start + "\n");
     }
     return $start;
 }
@@ -21,7 +17,6 @@ proc float Subtract(float $list[])
     {
         $start -= $list[$i];
     }
-    print ($start + "\n");
     return $start;
 }
 
@@ -33,7 +28,6 @@ proc float Divide(float $list[])
     {
         $start /= $list[$i];
     }
-    print ($start + "\n");
     return $start;
 }
 
@@ -45,7 +39,6 @@ proc float Multiply(float $list[])
     {
         $start *= $list[$i];
     }
-    print ($start + "\n");
     return $start;
 }
 
@@ -53,7 +46,6 @@ proc float Multiply(float $list[])
 proc float Power(float $list[])
 {
     float $result = pow ($list[0], $list[1]);
-    print ($result + "\n");
     return $result;
 }
 
@@ -62,7 +54,6 @@ proc float Mean(float $list[])
 {
     float $start = Add($list);
     $start /= size($list);
-    print ($start + "\n");
     return $start;
 }
 
@@ -84,11 +75,10 @@ proc float Median(float $list[])
         $result = ($sortedList[$n] + $sortedList[($n - 1)]) / 2;
     }
 
-    print ($result + "\n");
     return $result;
 }
 
-proc Output(float $list, string $x)
+proc Output(float $list[], string $x)
 {
     print ($list[0]);
     for ($i = 1; $i < size($list); $i++)
@@ -98,7 +88,7 @@ proc Output(float $list, string $x)
     print (" = ");
 }
 
-proc Calculator(float $list, string $opp)
+proc Calculator(float $list[], string $opp)
 {
     switch ($opp)
     {
