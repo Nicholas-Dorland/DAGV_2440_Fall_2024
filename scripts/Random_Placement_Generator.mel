@@ -1,0 +1,11 @@
+//fdsa
+
+//Get parameters
+float $minX, $minY, $minZ, $maxX, $maxY, $maxZ;
+int $numBubbles;
+
+//Generate Bubble
+
+//At random place
+
+//UI code
