@@ -1,11 +1,63 @@
-//fdsa
+global proc RandomPlacement(float $minX, float $minY, float $minZ, float $maxX, float $maxY, float $maxZ, int $numObjs)
+{
+    //GetSelection
+    string $sels[] = `ls -sl`;
 
-//Get parameters
-float $minX, $minY, $minZ, $maxX, $maxY, $maxZ;
-int $numBubbles;
+    //Generate Duplicates
+    for ($i = 0; $i < size($sels); $i++)
+    {
+        for ($x = 0; $x < $numObjs; $x++)
+        {
+            string $tempObj[] = `duplicate -rr $sels[$i]`;
 
-//Generate Bubble
+            //Move to random place
+            float $randX = `rand $minX $maxX`;
+            float $randY = `rand $minY $maxY`;
+            float $randZ = `rand $minZ $maxZ`;
 
-//At random place
+            move -ws $randX $randY $randZ $tempObj;
+        }
+    }
+}
 
 //UI code
+// Window
+    //Collumn
+        //Row
+            //text field
+            //float $xMin = float field
+            //float $xMax = float field
+        //Row
+            //text field
+            //float $yMin = float field
+            //float $yMax = float field
+        //Row
+            //text field
+            //float $zMin = float field
+            //float $zMax = float field
+        //Row
+            //text field
+            //float $dupNum = float field
+        //Row
+            //do button
+            //cancel button
+/*Window
+-   ------------------------------------
+-                                       |
+-                                       |
+    -                                   |
+    -                                   |
+    -                                   V
+    Button -command "RandomPlacement(values)";
+*/
+
+
+//Maya Tearaways
+/**********************
+
+
+
+
+
+
+********************* */
