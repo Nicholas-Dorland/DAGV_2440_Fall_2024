@@ -20,44 +20,66 @@ global proc RandomPlacement(float $minX, float $minY, float $minZ, float $maxX, 
     }
 }
 
+global proc GetValues()
+{
+    //Get values
+    string $field1 = `optionVar -q "field1"`;
+    string $field2 = `optionVar -q "field2"`;
+    string $field3 = `optionVar -q "field3"`;
+    string $field4 = `optionVar -q "field4"`;
+    string $field5 = `optionVar -q "field5"`;
+    string $field6 = `optionVar -q "field6"`;
+    string $field7 = `optionVar -q "field7"`;
+
+    //Translate to types
+    float $xDown = `floatField -q -value $field1`;
+    float $xUp = `floatField -q -value $field2`;
+    float $yDown = `floatField -q -value $field3`;
+    float $yUp = `floatField -q -value $field4`;
+    float $zDown = `floatField -q -value $field5`;
+    float $zUp = `floatField -q -value $field6`;
+    int $num = `intField -q -value $field7`;
+
+    //Plug values into function
+    RandomPlacement($xDown, $yDown, $zDown, $xUp, $yUp, $zUp, $num);
+}
+
 //UI code
-// Window
-    //Collumn
-        //Row
-            //text field
-            //float $xMin = float field
-            //float $xMax = float field
-        //Row
-            //text field
-            //float $yMin = float field
-            //float $yMax = float field
-        //Row
-            //text field
-            //float $zMin = float field
-            //float $zMax = float field
-        //Row
-            //text field
-            //float $dupNum = float field
-        //Row
-            //do button
-            //cancel button
-/*Window
--   ------------------------------------
--                                       |
--                                       |
-    -                                   |
-    -                                   |
-    -                                   V
-    Button -command "RandomPlacement(values)";
-*/
+global proc SpreadUI()
+{
+    //Declare window and erase old window
+    string $mWindow = "dsWindow";
+    if (`window -exists $mWindow`)
+        deleteUI $mWindow;
 
+    //Window Title
+    $mWindow = `window -title "Multi-Spread" -wh 300 200 -rtf 1`;
+    string $mColumn = `columnLayout -p $mWindow -adj 1`;
+    //X value Row
+    string $rowOne = `rowLayout -nc 4 -p $mColumn`;
+    text -l "Min X: " -p $rowOne;
+    optionVar -sv "field1" `floatField -p $rowOne`;
+    text -l "Max X: " -p $rowOne;
+    optionVar -sv "field2" `floatField -p $rowOne`;
+    //Y value Row
+    string $rowTwo = `rowLayout -nc 4 -p $mColumn`;
+    text -l "Min Y: " -p $rowTwo;
+    optionVar -sv "field3" `floatField -p $rowTwo`;
+    text -l "Max Y: " -p $rowTwo;
+    optionVar -sv "field4" `floatField -p $rowTwo`;
+    //Z value Row
+    string $rowThree = `rowLayout -nc 4 -p $mColumn`;
+    text -l "Min Z: " -p $rowThree;
+    optionVar -sv "field5" `floatField -p $rowThree`;
+    text -l "Max Z: " -p $rowThree;
+    optionVar -sv "field6" `floatField -p $rowThree`;
+    //Number of copies Row
+    string $rowFour = `rowLayout -nc 2 -p $mColumn`;
+    text -l "Number of Copies: " -p $rowFour;
+    optionVar -sv "field7" `intField -p $rowFour`;
+    button -p $mColumn -l "Engage" -command "GetValues";
 
-//Maya Tearaways
-/**********************
+    showWindow $mWindow;
+}
 
-
-
-
-
-
-********************* */
+SpreadUI();
