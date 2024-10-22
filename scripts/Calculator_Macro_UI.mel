@@ -1,0 +1,190 @@
+//Add
+proc float Add(float $list[])
+{
+    float $start = $list[0];
+    for ($i = 1; $i < size($list); $i++)
+    {
+        $start += $list[$i];
+    }
+    return $start;
+}
+
+//Subtract
+proc float Subtract(float $list[])
+{
+    float $start = $list[0];
+    for ($i = 1; $i < size($list); $i++)
+    {
+        $start -= $list[$i];
+    }
+    return $start;
+}
+
+//Divide
+proc float Divide(float $list[])
+{
+    float $start = $list[0];
+    for ($i = 1; $i < size($list); $i++)
+    {
+        $start /= $list[$i];
+    }
+    return $start;
+}
+
+//Multiply
+proc float Multiply(float $list[])
+{
+    float $start = $list[0];
+    for ($i = 1; $i < size($list); $i++)
+    {
+        $start *= $list[$i];
+    }
+    return $start;
+}
+
+//Power
+proc float Power(float $list[])
+{
+    float $result = pow ($list[0], $list[1]);
+    return $result;
+}
+
+//Mean
+proc float Mean(float $list[])
+{
+    float $start = Add($list);
+    $start /= size($list);
+    return $start;
+}
+
+//Median
+proc float Median(float $list[])
+{    
+    float $sortedList[] = sort ($list);
+    float $result = 0;
+
+    // Find median, whether the size of list is odd or even.
+    int $m = size($list);
+    int $n = ($m / 2);  // Middle of the array.
+    if ($m % 2)
+    {
+        $result = $sortedList[$n];
+    }
+    else
+    {
+        $result = ($sortedList[$n] + $sortedList[($n - 1)]) / 2;
+    }
+
+    return $result;
+}
+
+proc Output(float $list[], string $x)
+{
+    print ($list[0]);
+    for ($i = 1; $i < size($list); $i++)
+    {
+        print (" " + $x + " " + $list[$i]);
+    }
+    print (" = ");
+}
+
+proc Calculator(float $list[], string $opp)
+{
+    switch ($opp)
+    {
+        case "add":
+            Output($list, "+");
+            print (Add($list));
+            break;
+        case "subtract":
+            Output($list, "-");
+            print (Subtract($list));
+            break;
+        case "divide":
+            Output($list, "/");
+            print (Divide($list));
+            break;
+        case "multiply":
+            Output($list, "*");
+            print (Multiply($list));
+            break;
+        case "power":
+            Output($list, "^");
+            print (Power($list));
+            break;
+        case "mean":
+            print ("The Mean of ");
+            Output($list, "+");
+            print (Mean($list));
+            break;
+        case "median":
+            print ("The Median of ");
+            Output($list, "+");
+            print (Median($list));
+            break;
+    }
+}
+
+global proc GetValues()
+{
+    //Get values
+
+    //tokenize
+
+    //plug into function
+}
+
+global proc CalcUILator()
+{
+    //Declare window and erase old window
+    string $mWindow = "dsWindow";
+    if (`window -exists $mWindow`)
+        deleteUI $mWindow;
+
+    //Window Title
+    $mWindow = `window -title "Multi-Spread" -wh 300 200 -rtf 1`;
+    string $mColumn = `columnLayout -p $mWindow -adj 1`;
+
+    //Array Input Row
+    string $rowOne = `rowLayout -nc 4 -p $mColumn`;
+    text -l "List of numbers: " -p $rowOne;
+    optionVar -sv "field1" `textField -p $rowOne -pht "1.1 2.22 3.14..."`;
+
+    //Operation Selection Row
+    string $rowTwo = `rowLayout -nc 4 -p $mColumn`;
+    string $buttonCollection = `radioCollection -nci 7 -p $rowTwo`;
+    string $ob1, $ob2, $ob3, $ob4, $ob5, $ob6, $ob7;
+    $ob1 = `radioButton`
+    //optionVar -sv "operation" `radioButtonGrp -p $rowTwo`;
+
+    //Output Row
+
+
+    //Buttons
+}
+
+
+
+window;
+columnLayout -adjustableColumn true -rowSpacing 10;
+frameLayout -label "Colors";
+    columnLayout;
+    string $collection1 = `radioCollection`;
+    string $rb1, $rb2, $rb3;
+    $rb1 = `radioButton -label "Red"`;
+    $rb2 = `radioButton -label "Blue"`;
+    $rb3 = `radioButton -label "Green"`;
+    setParent ..; setParent ..;
+
+frameLayout -label "Position";
+    columnLayout;
+    string $collection2 = `radioCollection`;
+    string $rb4, $rb5, $rb6;
+    $rb4 = `radioButton -label "Top"`;
+    $rb5 = `radioButton -label "Middle"`;
+    $rb6 = `radioButton -label "Bottom"`;
+    setParent ..; setParent ..;
+
+radioCollection -edit -select $rb2 $collection1;
+radioCollection -edit -select $rb6 $collection2;
+showWindow;
