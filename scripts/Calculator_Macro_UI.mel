@@ -1,5 +1,5 @@
 //Add
-proc float Add(float $list[])
+global proc float Add(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
@@ -10,7 +10,7 @@ proc float Add(float $list[])
 }
 
 //Subtract
-proc float Subtract(float $list[])
+global proc float Subtract(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
@@ -21,7 +21,7 @@ proc float Subtract(float $list[])
 }
 
 //Divide
-proc float Divide(float $list[])
+global proc float Divide(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
@@ -32,7 +32,7 @@ proc float Divide(float $list[])
 }
 
 //Multiply
-proc float Multiply(float $list[])
+global proc float Multiply(float $list[])
 {
     float $start = $list[0];
     for ($i = 1; $i < size($list); $i++)
@@ -43,14 +43,14 @@ proc float Multiply(float $list[])
 }
 
 //Power
-proc float Power(float $list[])
+global proc float Power(float $list[])
 {
     float $result = pow ($list[0], $list[1]);
     return $result;
 }
 
 //Mean
-proc float Mean(float $list[])
+global proc float Mean(float $list[])
 {
     float $start = Add($list);
     $start /= size($list);
@@ -58,7 +58,7 @@ proc float Mean(float $list[])
 }
 
 //Median
-proc float Median(float $list[])
+global proc float Median(float $list[])
 {    
     float $sortedList[] = sort ($list);
     float $result = 0;
@@ -78,62 +78,61 @@ proc float Median(float $list[])
     return $result;
 }
 
-proc Output(float $list[], string $x)
+//Provide results of called function
+global proc string Calculator(float $list[], string $opp)
 {
-    print ($list[0]);
-    for ($i = 1; $i < size($list); $i++)
-    {
-        print (" " + $x + " " + $list[$i]);
-    }
-    print (" = ");
-}
-
-proc Calculator(float $list[], string $opp)
-{
+    string $value;
     switch ($opp)
     {
-        case "add":
-            Output($list, "+");
-            print (Add($list));
+        case "Add":
+            $value = Add($list);
             break;
-        case "subtract":
-            Output($list, "-");
-            print (Subtract($list));
+        case "Subtract":
+            $value = Subtract($list);
             break;
-        case "divide":
-            Output($list, "/");
-            print (Divide($list));
+        case "Divide":
+            $value = Divide($list);
             break;
-        case "multiply":
-            Output($list, "*");
-            print (Multiply($list));
+        case "Multiply":
+            $value = Multiply($list);
             break;
-        case "power":
-            Output($list, "^");
-            print (Power($list));
+        case "Power":
+            $value = Power($list);
             break;
-        case "mean":
-            print ("The Mean of ");
-            Output($list, "+");
-            print (Mean($list));
+        case "Mean":
+            $value = Mean($list);
             break;
-        case "median":
-            print ("The Median of ");
-            Output($list, "+");
-            print (Median($list));
+        case "Median":
+            $value = Median($list);
             break;
     }
+    return $value;
 }
 
+//Obtain and convert UI information
 global proc GetValues()
 {
     //Get values
+    string $nums = `optionVar -q "field1"`;
+    string $sel = `optionVar -q "option"`;
+    string $resultField = `optionVar -q "calcResult"`;
 
-    //tokenize
+    string $list = `textField -q -text $nums`;
+    string $option = `radioCollection -q -select $sel`;
 
-    //plug into function
+    //tokenize - Courtesy of Microsoft Copilot
+    string $tokenList[];
+    tokenizeList($list, $tokenList);
+    float $floatList[];
+    for ($i = 0; $i < size($tokenList); $i++)
+        $floatList[$i] = $tokenList[$i];
+
+    //Plug into function
+    string $result = Calculator($floatList, $option);
+    textField -e -text $result $resultField;
 }
 
+//UI for the Calculator
 global proc CalcUILator()
 {
     //Declare window and erase old window
@@ -142,49 +141,37 @@ global proc CalcUILator()
         deleteUI $mWindow;
 
     //Window Title
-    $mWindow = `window -title "Multi-Spread" -wh 300 200 -rtf 1`;
+    $mWindow = `window -title "Multi-Spread" -wh 425 100 -rtf 1`;
     string $mColumn = `columnLayout -p $mWindow -adj 1`;
 
     //Array Input Row
-    string $rowOne = `rowLayout -nc 4 -p $mColumn`;
+    string $rowOne = `rowLayout -ad2 2 -nc 2 -p $mColumn`;
     text -l "List of numbers: " -p $rowOne;
-    optionVar -sv "field1" `textField -p $rowOne -pht "1.1 2.22 3.14..."`;
+    optionVar -sv "field1" `textField -p $rowOne -pht "1.0, 2.1, 3.14,..."`;
 
     //Operation Selection Row
-    string $rowTwo = `rowLayout -nc 4 -p $mColumn`;
-    string $buttonCollection = `radioCollection -nci 7 -p $rowTwo`;
+    string $rowTwo = `rowLayout -nc 8 -p $mColumn`;
+    optionVar -sv "option" `radioCollection -p $rowTwo`;
     string $ob1, $ob2, $ob3, $ob4, $ob5, $ob6, $ob7;
-    $ob1 = `radioButton`
-    //optionVar -sv "operation" `radioButtonGrp -p $rowTwo`;
+    $ob1 = `radioButton -l "Add" -p $rowTwo "Add"`;
+    $ob2 = `radioButton -l "Subtract" -p $rowTwo "Subtract"`;
+    $ob3 = `radioButton -l "Divide" -p $rowTwo "Divide"`;
+    $ob4 = `radioButton -l "Multiply" -p $rowTwo "Multiply"`;
+    $ob5 = `radioButton -l "Power" -p $rowTwo "Power"`;
+    $ob6 = `radioButton -l "Mean" -p $rowTwo "Mean"`;
+    $ob7 = `radioButton -l "Median" -p $rowTwo "Median"`;
+    setParent..; setParent..;
 
     //Output Row
+    string $rowThree = `rowLayout -ad1 1 -p $mColumn`;
+    optionVar -sv "calcResult" `textField -p $rowThree -ed 0`;
 
+    //Button
+    string $rowFour = `rowLayout -nc 1 -p $mColumn`;
+    button -p $mColumn -l "Calculate" -command "GetValues";
 
-    //Buttons
+    showWindow $mWindow;
 }
 
-
-
-window;
-columnLayout -adjustableColumn true -rowSpacing 10;
-frameLayout -label "Colors";
-    columnLayout;
-    string $collection1 = `radioCollection`;
-    string $rb1, $rb2, $rb3;
-    $rb1 = `radioButton -label "Red"`;
-    $rb2 = `radioButton -label "Blue"`;
-    $rb3 = `radioButton -label "Green"`;
-    setParent ..; setParent ..;
-
-frameLayout -label "Position";
-    columnLayout;
-    string $collection2 = `radioCollection`;
-    string $rb4, $rb5, $rb6;
-    $rb4 = `radioButton -label "Top"`;
-    $rb5 = `radioButton -label "Middle"`;
-    $rb6 = `radioButton -label "Bottom"`;
-    setParent ..; setParent ..;
-
-radioCollection -edit -select $rb2 $collection1;
-radioCollection -edit -select $rb6 $collection2;
-showWindow;
+//Function to run everything:
+CalcUILator();
