@@ -9,11 +9,11 @@ def rename_sequentially(name):
     pad = len(working)
     count = 1
 
-    #Remane each object using information provided earlier
+    #Rename each object using information provided earlier
     for obj in sels:
         new_name = name.replace(working, str(count).zfill(pad))
         count += 1
         cmds.rename(obj, new_name)
 
-# Example usage: rename selected objects to "Leg_##_Jnt"
-rename_sequentially("Left_And_Right_Arm_##_Geo")
+#Example usage: rename selected objects to "Leg_##_Jnt"
+rename_sequentially("Leg_##_Jnt")
